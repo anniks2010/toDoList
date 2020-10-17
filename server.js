@@ -18,6 +18,11 @@ app.get("/",(req,res)=>{
 
     res.render("index.ejs",{date: day, toDoItems: toDoList});
 });
+app.get("/about",(req,res)=>{
+
+    res.render("about.ejs");
+});
+
 
 app.post("/",(req,res)=>{
     let newTask = req.body.newTask; // name tuleb vaadata input tag seest
