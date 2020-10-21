@@ -1,0 +1,18 @@
+<%- include("header.ejs") -%>
+<div class="box" id="heading">
+    <h1><%= date %></h1>
+</div>
+<div class="box">
+<% for (var i=0; i< toDoItems.length; i++){%>
+    <div class="item">
+        <input type="checkbox">
+        <p><%= toDoItems[i].description %></p>
+    </div>
+    <%}%>
+<form action="/work" class="class" method="post">
+    <input type="text" name="newWork" placeholder="New Work" autocomplete="off"> <!--autocomplete tähendab, et ei näitaks eelnevaid kirjeid, mida on enne sisestatud-->
+    <button type="submit">+</button>
+
+</form>
+</div>
+<%- include("footer.ejs") -%>
