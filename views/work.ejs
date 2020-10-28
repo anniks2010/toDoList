@@ -4,10 +4,12 @@
 </div>
 <div class="box">
 <% for (var i=0; i< toDoItems.length; i++){%>
+    <form action="/work/delete" method="POST">
     <div class="item">
-        <input type="checkbox">
+        <input name="checkbox" value="<%= toDoItems[i].description %>" type="checkbox" onchange="this.form.submit()">
         <p><%= toDoItems[i].description %></p>
     </div>
+    </form>
     <%}%>
 <form action="/work" class="class" method="post">
     <input type="text" name="newWork" placeholder="New Work" autocomplete="off"> <!--autocomplete tähendab, et ei näitaks eelnevaid kirjeid, mida on enne sisestatud-->

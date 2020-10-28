@@ -5,13 +5,18 @@ const Task=require('../models/task');
 
 
 exports.getMainPage= (req,res)=>{
+
+    Task.fetchTasks(items=>{
+        let day =date.getDate();
+        res.render("index.ejs",{date: day, toDoItems:items});
+    }); ///items=callback
     
-    let day=date.getDate(); //// siin kutsutakse välja const date = require(__dirname+"/generateDate.js");
-    const itemsList=Task.fetchTasks();
+   /* let day=date.getDate(); //// siin kutsutakse välja const date = require(__dirname+"/generateDate.js");
+    const itemsList=Task.fetchTasks();*/
     /*let weekday = date.getWeekDay();
     console.log(day);*/
 
-    res.render("index.ejs",{date: day, toDoItems: itemsList});
+    ///res.render("index.ejs",{date: day, toDoItems:itemsList});
 };
 exports.postNewItem=(req,res)=>{
     const item = new Task(req.body.newTask);
@@ -24,3 +29,8 @@ exports.postNewItem=(req,res)=>{
 
 
 };
+exports.deleteItem = (req,res)=>{
+    console.log("Call from to delete",req.body.checkbox);
+    Task.deleteItem(req.body.checkbox);
+    res.redirect('/');
+}

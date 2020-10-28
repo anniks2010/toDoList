@@ -4,5 +4,6 @@ const router=express.Router();
 
 router.get('/work', workController.getWorkPage);
 router.post('/work',workController.postNewWork);
+router.post('/work/delete',workController.deleteWork);
 
 module.exports=router;
