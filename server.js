@@ -1,6 +1,9 @@
 const express=require("express");
 const bodyParser=require("body-parser");
 const ejs=require("ejs");
+////DB ühendus tuleb teha enne routes!!!
+require('./models/db');
+
 ///const date = require(__dirname+"/generateDate.js");
 const getError=require('./routes/404');
 const getAbout=require('./routes/about');

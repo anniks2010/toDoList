@@ -1,38 +1,47 @@
 const date=require('../generatedate.js');
-const Task=require('../models/worktasks');
+const mongoose = require('mongoose');
+const Work = mongoose.model('Work');
 
 
-///let toDoList =[];
 
 
 exports.getWorkPage= (req,res)=>{
 
-    Task.fetchTasks(workItems=>{
-        let day =date.getDate();
-        res.render("work.ejs",{date: day, toDoItems:workItems});
-    }); ///items=callback
-
-    
-    //let day=date.getDate(); //// siin kutsutakse välja const date = require(__dirname+"/generateDate.js");
-    //const itemsList=Task.fetchTasks();
-    /*let weekday = date.getWeekDay();
-    console.log(day);*/
-
-    ///res.render("work.ejs",{date: day, toDoItems: itemsList});
+    let day =date.getDate();
+    Work.find((error,works)=>{
+        if(!error){
+            res.render("work.ejs",{date: day, toDoItems:works});
+        }else{
+            console.log("Failed to retireve data: ", error);
+        }
+    });  
 };
 exports.postNewWork=(req,res)=>{
 
-    const item = new Task(req.body.newWork);
-    item.saveTask();
-    /*let newWork = req.body.newWork; // name tuleb vaadata input tag seest
-    toDoList.push(newWork); // push lisab elemendi massiivi sisse.*/
-
-    res.redirect("/work");
+    const work = req.body.newWork;
+    let newWork = new Work();
+    newWork.description=work;
+   
+    newWork.save((error,response)=>{
+        if(!error){
+            res.redirect('/work');
+        }else{
+            console.log(error);
+        }
+    });
 
 
 };
 exports.deleteWork = (req,res)=>{
     console.log("Call from to delete",req.body.checkbox);
-    Task.deleteWork(req.body.checkbox);
-    res.redirect('/work');
+    const checkItemId= req.body.checkbox;
+
+    Work.findByIdAndRemove(checkItemId,function(error){
+        if(!error){
+            console.log("Successfully deleted the item");
+            res.redirect('/work');
+        }else{
+            console.log(error);
+        }
+    });
 }
